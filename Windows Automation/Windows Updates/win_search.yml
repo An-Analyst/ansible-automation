@@ -1,0 +1,12 @@
+---
+- name: Update Windows
+  hosts: all
+  tasks:
+    - name: Search Windows updates
+      ansible.windows.win_updates:
+        state: searched
+        reboot: false
+        log_path: C:\win_search.txt
+  become: true # become is used to elevate the privileges
+  become_method: runas 
+  become_user: SYSTEM

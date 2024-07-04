@@ -1,0 +1,14 @@
+# This is the inventory file 
+# You must mention this file explicitly when you run ansible-playbook command 
+# Example:- ansible-playbook -i inventory win_update.yml
+
+[winhosts]
+IP_of_your_endpoint
+
+[winhosts:vars]
+ansible_user = <admin@yourdomain.com> # add your AD Domain admin user
+ansible_password = <yourpassword>
+ansible_connection = winrm # WinRM is used to manage windows systems remotely
+ansible_winrm_transport = ntlm # We are using NTLM authentication. 
+ansible_port=  5985 # default port of WinRM 
+ansible_winrm_server_cert_validation = ignore
