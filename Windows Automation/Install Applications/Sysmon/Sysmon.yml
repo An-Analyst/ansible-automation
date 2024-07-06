@@ -1,0 +1,28 @@
+---
+- name: Install Sysmon on  Windows systems
+  hosts: all
+  tasks:
+    - name: Create folder # create a folder with name Sysmon in Windows System
+      win_shell: New-Item -Path 'C:\\Sysmon' -ItemType Directory
+
+    - name: Copy Eula.txt
+      ansible.windows.win_copy:
+        src: /home/amol/Downloads/Sysmon/Eula.txt # path of the file in ansible server Ubuntu 24
+        dest: C:\Sysmon\Eula.txt # path of windows 10/11 system where the file will be pasted
+
+    - name: Copy Sysmon .exe file
+      ansible.windows.win_copy:
+        src: /home/amol/Downloads/Sysmon/Sysmon64.exe
+        dest: C:\Sysmon\Sysmon.exe
+
+    - name: Copy Sysmon .xml file
+      ansible.windows.win_copy:
+        src: /home/amol/Downloads/Sysmon/sysmonconfig-export.xml
+        dest: C:\Sysmon\sysmonconfig-export.xml
+
+    - name: Install Sysmon
+      win_shell: Invoke-Command -ScriptBlock {cmd.exe /C "C:\Sysmon\Sysmon.exe" -i "C:\Sysmon\sysmonconfig-export.xml" -accepteula}
+    
+    - name: Restart Windows # remove this block if you don't want to restart your windows system
+      ansible.windows.win_reboot:
+        msg: "Sysmon Installed. Rebooting Device"
