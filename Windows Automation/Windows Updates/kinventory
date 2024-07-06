@@ -1,0 +1,10 @@
+[winhosts]
+abc.domain.com
+
+[winhosts:vars]
+ansible_user = userid
+ansible_password = password
+ansible_connection = winrm
+ansible_port = 5986
+ansible_winrm_transport=kerberos
+ansible_winrm_server_cert_validation = ignore
